@@ -79,7 +79,7 @@ a{color:inherit;}
 ::selection{background:var(--accent-soft);}
 
 button{font-family:inherit;cursor:pointer;}
-button:focus-visible, [tabindex]:focus-visible, td:focus-visible{
+button:focus-visible, [tabindex]:focus-visible, td:focus-visible, select:focus-visible{
   outline:2px solid var(--accent);
   outline-offset:2px;
 }
@@ -472,6 +472,35 @@ table.perclass td.undef{color:var(--error);font-style:italic;}
   font-weight:700;
 }
 
+/* ---------- Metric picker (dropdowns) ---------- */
+.metric-picker{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px solid var(--line);
+}
+.metric-picker .control{flex:1;min-width:150px;}
+.metric-picker label{
+  display:block;
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--ink-soft);
+  margin-bottom:6px;
+}
+.metric-picker select{
+  width:100%;
+  font-family:var(--mono);
+  font-size:12.5px;
+  padding:9px 10px;
+  border:1px solid var(--line-strong);
+  border-radius:var(--radius);
+  background:var(--paper);
+  color:var(--ink);
+}
+.metric-picker select:hover{border-color:var(--accent);}
+
 /* ---------- Custom panel ---------- */
 .custom-controls{
   display:grid;
@@ -580,9 +609,25 @@ footer{
       </div>
 
       <div class="panel">
-        <h2>per-class metrics — click a row</h2>
-        <table class="perclass" id="perClassTable"><thead><tr><th>class</th><th>precision</th><th>recall</th><th>f1</th><th>support</th></tr></thead><tbody><tr title="Click to inspect this class. Use precision / recall / F1 buttons below for a specific formula."><td>Spam</td><td class="">0.898</td><td class="">0.880</td><td class="">0.889</td><td>500</td></tr><tr title="Click to inspect this class. Use precision / recall / F1 buttons below for a specific formula."><td>Not Spam</td><td class="">0.882</td><td class="">0.900</td><td class="">0.891</td><td>500</td></tr></tbody></table>
-      <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px;"><button class="mono" style="font-size: 10.5px; padding: 5px 8px; border: 1px solid var(--line); background: var(--paper); border-radius: 3px; color: var(--ink);">Spam · precision</button><button class="mono" style="font-size: 10.5px; padding: 5px 8px; border: 1px solid var(--line); background: var(--paper); border-radius: 3px; color: var(--ink);">Spam · recall</button><button class="mono" style="font-size: 10.5px; padding: 5px 8px; border: 1px solid var(--line); background: var(--paper); border-radius: 3px; color: var(--ink);">Spam · f1</button><button class="mono" style="font-size: 10.5px; padding: 5px 8px; border: 1px solid var(--line); background: var(--paper); border-radius: 3px; color: var(--ink);">Spam · specificity</button><button class="mono" style="font-size: 10.5px; padding: 5px 8px; border: 1px solid var(--line); background: var(--paper); border-radius: 3px; color: var(--ink);">Not Spam · precision</button><button class="mono" style="font-size: 10.5px; padding: 5px 8px; border: 1px solid var(--line); background: var(--paper); border-radius: 3px; color: var(--ink);">Not Spam · recall</button><button class="mono" style="font-size: 10.5px; padding: 5px 8px; border: 1px solid var(--line); background: var(--paper); border-radius: 3px; color: var(--ink);">Not Spam · f1</button><button class="mono" style="font-size: 10.5px; padding: 5px 8px; border: 1px solid var(--line); background: var(--paper); border-radius: 3px; color: var(--ink);">Not Spam · specificity</button></div><div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px;"><button class="mono" style="font-size: 10.5px; padding: 5px 8px; border: 1px solid var(--line); background: var(--paper); border-radius: 3px; color: var(--ink);">Spam · precision</button><button class="mono" style="font-size: 10.5px; padding: 5px 8px; border: 1px solid var(--line); background: var(--paper); border-radius: 3px; color: var(--ink);">Spam · recall</button><button class="mono" style="font-size: 10.5px; padding: 5px 8px; border: 1px solid var(--line); background: var(--paper); border-radius: 3px; color: var(--ink);">Spam · f1</button><button class="mono" style="font-size: 10.5px; padding: 5px 8px; border: 1px solid var(--line); background: var(--paper); border-radius: 3px; color: var(--ink);">Spam · specificity</button><button class="mono" style="font-size: 10.5px; padding: 5px 8px; border: 1px solid var(--line); background: var(--paper); border-radius: 3px; color: var(--ink);">Not Spam · precision</button><button class="mono" style="font-size: 10.5px; padding: 5px 8px; border: 1px solid var(--line); background: var(--paper); border-radius: 3px; color: var(--ink);">Not Spam · recall</button><button class="mono" style="font-size: 10.5px; padding: 5px 8px; border: 1px solid var(--line); background: var(--paper); border-radius: 3px; color: var(--ink);">Not Spam · f1</button><button class="mono" style="font-size: 10.5px; padding: 5px 8px; border: 1px solid var(--line); background: var(--paper); border-radius: 3px; color: var(--ink);">Not Spam · specificity</button></div></div>
+        <h2>per-class metrics — click a row, or pick from the dropdowns</h2>
+        <table class="perclass" id="perClassTable"><thead><tr><th>class</th><th>precision</th><th>recall</th><th>f1</th><th>support</th></tr></thead><tbody><tr title="Click to inspect this class's recall. Use the dropdowns below for precision / f1 / specificity."><td>Spam</td><td class="">0.898</td><td class="">0.880</td><td class="">0.889</td><td>500</td></tr><tr title="Click to inspect this class's recall. Use the dropdowns below for precision / f1 / specificity."><td>Not Spam</td><td class="">0.882</td><td class="">0.900</td><td class="">0.891</td><td>500</td></tr></tbody></table>
+
+        <div class="metric-picker">
+          <div class="control">
+            <label>class</label>
+            <select id="classSelect"><option value="0">Spam</option><option value="1">Not Spam</option></select>
+          </div>
+          <div class="control">
+            <label>metric</label>
+            <select id="metricSelect">
+              <option value="precision">precision</option>
+              <option value="recall">recall</option>
+              <option value="f1">f1</option>
+              <option value="specificity">specificity</option>
+            </select>
+          </div>
+        </div>
+      </div>
 
       <div class="panel">
         <h2>overall metrics</h2>
@@ -710,12 +755,6 @@ function hexToRgba(hex, a){
   const r = parseInt(v.substring(0,2),16), g=parseInt(v.substring(2,4),16), b=parseInt(v.substring(4,6),16);
   return "rgba("+r+","+g+","+b+","+a+")";
 }
-function isDark(){
-  const attr = document.documentElement.getAttribute("data-theme");
-  if(attr==="dark") return true;
-  if(attr==="light") return false;
-  return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-}
 function cssVar(name){
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 }
@@ -832,7 +871,6 @@ function renderDistStrip(){
 /* ================= RENDER: MATRIX ================= */
 function renderMatrix(){
   const table = document.getElementById("matrixTable");
-  const n = state.classes.length;
   table.innerHTML = "";
 
   const thead = document.createElement("thead");
@@ -903,7 +941,7 @@ function applyHighlights(){
     document.querySelectorAll('table.matrix td[data-j="'+ci+'"]').forEach(td=>td.classList.add("hl-col"));
   } else if(m.type==="specificity"){
     document.querySelectorAll('table.matrix td').forEach(td=>{
-      const i=+td.dataset.i, j=+td.dataset.j;
+      const j=+td.dataset.j;
       if(j===ci) td.classList.add("hl-col");
     });
   }
@@ -952,6 +990,7 @@ function onCellClick(i,j){
       'For <strong>'+state.classes[j]+'</strong>, this same count is a <strong>False Positive</strong> — it drags down Precision for '+state.classes[j]+'.';
   }
   applyHighlights();
+  syncMetricPicker();
 }
 
 /* ================= FORMULA INSPECTOR ================= */
@@ -996,7 +1035,6 @@ function showFormula(type, classIndex){
   } else if(type==="accuracy"){
     titleEl.textContent = "Accuracy";
     descEl.textContent = "Of every sample in the dataset, how many did the model get right, regardless of class? It treats every class equally, which is exactly why it can be misleading on imbalanced data.";
-    const diagSum = state.matrix.reduce((sum,row,i)=>sum+row[i],0);
     const diagTerms = state.matrix.map((row,i)=>row[i]).join(" + ");
     formEl.innerHTML = "Accuracy = "+frac("correct predictions","total samples")+'<span class="eq">=</span>'+
       frac(diagTerms, s.total)+'<span class="eq">=</span><span class="result">'+fmtNum(s.accuracy)+'</span>';
@@ -1024,7 +1062,6 @@ function showFormula(type, classIndex){
   } else if(type==="mcc"){
     titleEl.textContent = "Matthews Correlation Coefficient";
     descEl.textContent = "A single balanced score built from all four quadrants (TP, TN, FP, FN) at once. Ranges from \u22121 (always wrong) to +1 (perfect), with 0 meaning random guessing — considered one of the most reliable single numbers for binary problems, especially imbalanced ones.";
-    const p = s.per[0];
     formEl.innerHTML = "MCC = "+frac("TP·TN \u2212 FP·FN","\u221a(TP+FP)(TP+FN)(TN+FP)(TN+FN)")+'<span class="eq">=</span><span class="result">'+fmtNum(s.mcc)+'</span>';
     noteEl.textContent = "Uses every one of the four quadrant counts, so it's much harder to fool with class imbalance than Accuracy alone.";
   } else if(type==="microF1"){
@@ -1036,6 +1073,7 @@ function showFormula(type, classIndex){
   applyHighlights();
   renderPerClassTable();
   renderOverallGrid();
+  syncMetricPicker();
 }
 
 /* ================= RENDER: PER-CLASS TABLE ================= */
@@ -1056,35 +1094,55 @@ function renderPerClassTable(){
       "<td class=\""+(p.recall===null?"undef":"")+"\">"+(p.recall===null?"undef":fmtNum(p.recall))+"</td>"+
       "<td class=\""+(p.f1===null?"undef":"")+"\">"+(p.f1===null?"undef":fmtNum(p.f1))+"</td>"+
       "<td>"+p.support+"</td>";
+    tr.title = "Click to inspect this class's recall. Use the dropdowns below for precision / f1 / specificity.";
     tr.addEventListener("click", ()=> showFormula("recall", p.index));
-    // allow clicking specific cell text for precision/f1 too via title hint
-    tr.title = "Click to inspect this class. Use precision / recall / F1 buttons below for a specific formula.";
     tbody.appendChild(tr);
   });
   table.appendChild(tbody);
+}
 
-  // small per-row action buttons appended after table for precision/recall/f1 clarity
-  const actionsWrap = document.createElement("div");
-  actionsWrap.style.marginTop = "10px";
-  actionsWrap.style.display = "flex";
-  actionsWrap.style.flexWrap = "wrap";
-  actionsWrap.style.gap = "6px";
-  s.per.forEach(p=>{
-    ["precision","recall","f1","specificity"].forEach(t=>{
-      const b = document.createElement("button");
-      b.textContent = p.class+" · "+t;
-      b.className = "mono";
-      b.style.fontSize = "10.5px";
-      b.style.padding = "5px 8px";
-      b.style.border = "1px solid var(--line)";
-      b.style.background = (state.selectedMetric.classIndex===p.index && state.selectedMetric.type===t) ? "var(--accent-soft)" : "var(--paper)";
-      b.style.borderRadius = "3px";
-      b.style.color = "var(--ink)";
-      b.addEventListener("click",(e)=>{ e.stopPropagation(); showFormula(t, p.index); });
-      actionsWrap.appendChild(b);
-    });
+/* ================= METRIC PICKER (dropdowns) ================= */
+function renderMetricPickerOptions(){
+  const classSelect = document.getElementById("classSelect");
+  const currentVal = classSelect.value;
+  classSelect.innerHTML = "";
+  state.classes.forEach((c,i)=>{
+    const opt = document.createElement("option");
+    opt.value = i;
+    opt.textContent = c;
+    classSelect.appendChild(opt);
   });
-  table.parentElement.appendChild(actionsWrap);
+  // preserve selection index if still valid, else default to 0
+  const idx = state.selectedMetric.classIndex;
+  if(idx!==null && idx!==undefined && idx < state.classes.length){
+    classSelect.value = idx;
+  } else if(currentVal !== "" && +currentVal < state.classes.length){
+    classSelect.value = currentVal;
+  } else {
+    classSelect.value = 0;
+  }
+}
+
+function syncMetricPicker(){
+  const classSelect = document.getElementById("classSelect");
+  const metricSelect = document.getElementById("metricSelect");
+  const m = state.selectedMetric;
+  if(["precision","recall","f1","specificity"].includes(m.type) && m.classIndex!==null && m.classIndex!==undefined){
+    classSelect.value = m.classIndex;
+    metricSelect.value = m.type;
+  }
+}
+
+function initMetricPicker(){
+  const classSelect = document.getElementById("classSelect");
+  const metricSelect = document.getElementById("metricSelect");
+  const trigger = ()=>{
+    const ci = +classSelect.value;
+    const metric = metricSelect.value;
+    showFormula(metric, ci);
+  };
+  classSelect.addEventListener("change", trigger);
+  metricSelect.addEventListener("change", trigger);
 }
 
 /* ================= RENDER: OVERALL METRICS ================= */
@@ -1167,6 +1225,7 @@ function renderAll(){
   document.getElementById("cellInspector").classList.remove("active");
   document.getElementById("cellInspector").innerHTML = '<span class="ci-title">cell inspector</span>Click any cell above to see exactly what it counts, and which metrics it feeds into.';
   renderPerClassTable();
+  renderMetricPickerOptions();
   renderOverallGrid();
   showFormula("accuracy");
 }
@@ -1174,10 +1233,12 @@ function renderAll(){
 /* ================= INIT ================= */
 initCustomControls();
 initTheme();
+initMetricPicker();
 loadScenario("spam");
 
 })();
 </script>
+
 
 
 </body></html>
